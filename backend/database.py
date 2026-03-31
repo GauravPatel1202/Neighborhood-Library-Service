@@ -3,15 +3,15 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Database URL gracefully falls back to SQLite for native local testing without Docker
+# Database URL strictly defined for PostgreSQL as per requirements
 SQLALCHEMY_DATABASE_URL = os.environ.get(
-    "DATABASE_URL", "sqlite:///./library.db"
+    "DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/library"
 )
 
-# Connect to the database
+# Connect exclusively to the PostgreSQL database
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, 
-    connect_args={"check_same_thread": False} if "sqlite" in SQLALCHEMY_DATABASE_URL else {}
+    pool_pre_ping=True
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
