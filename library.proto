@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package library;
+
+// ---------------------------------
+// Models
+// ---------------------------------
+message Book {
+  int32 id = 1;
+  string title = 2;
+  string author = 3;
+  string isbn = 4;
+  int32 total_copies = 5;
+  int32 available_copies = 6;
+}
+
+message Member {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+  string phone = 4;
+}
+
+message Borrowing {
+  int32 id = 1;
+  int32 book_id = 2;
+  int32 member_id = 3;
+  string borrow_date = 4;
+  string due_date = 5;
+  string return_date = 6;
+  string status = 7; // "borrowed" or "returned"
+  Book book = 8;
+  Member member = 9;
+}
+
+// ---------------------------------
+// Request / Response Messages
+// ---------------------------------
+message CreateBookRequest {
+  string title = 1;
+  string author = 2;
+  string isbn = 3;
+  int32 total_copies = 4;
+}
+
+message Empty {}
+
+message BookListResponse {
+  repeated Book books = 1;
+}
+
+message CreateMemberRequest {
+  string name = 1;
+  string email = 2;
+  string phone = 3;
+}
+
+message MemberListResponse {
+  repeated Member members = 1;
+}
+
+message BorrowBookRequest {
+  int32 member_id = 1;
+  int32 book_id = 2;
+}
+
+message ReturnBookRequest {
+  int32 borrow_id = 1;
+}
+
+message MemberBorrowingsRequest {
+  int32 member_id = 1;
+}
+
+message BorrowingListResponse {
+  repeated Borrowing borrowings = 1;
+}
+
+// ---------------------------------
+// Service Interface
+// ---------------------------------
+service LibraryService {
+  // Books
+  rpc CreateBook(CreateBookRequest) returns (Book);
+  rpc GetBooks(Empty) returns (BookListResponse);
+  
+  // Members
+  rpc CreateMember(CreateMemberRequest) returns (Member);
+  rpc GetMembers(Empty) returns (MemberListResponse);
+  
+  // Borrowing Operations
+  rpc BorrowBook(BorrowBookRequest) returns (Borrowing);
+  rpc ReturnBook(ReturnBookRequest) returns (Borrowing);
+  rpc GetMemberBorrowings(MemberBorrowingsRequest) returns (BorrowingListResponse);
+}

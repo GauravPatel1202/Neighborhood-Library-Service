@@ -1,0 +1,15 @@
+# Backend environments
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/library.db
+
+# Apple/System
+.DS_Store
+
+# Frontend
+ui-app/node_modules/
+ui-app/.next/
+ui-app/build/
+ui-app/out/
