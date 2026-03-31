@@ -5,10 +5,10 @@ from sqlalchemy.orm import sessionmaker
 
 # Database URL strictly defined for PostgreSQL as per requirements
 SQLALCHEMY_DATABASE_URL = os.environ.get(
-    "DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/library"
+    "DATABASE_URL", "postgresql://postgres:qwerty@localhost:5432/library"
 )
 
-# Connect exclusively to the PostgreSQL database
+# Connect exclusively to the PostgreSQL databaseconnect
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, 
     pool_pre_ping=True
